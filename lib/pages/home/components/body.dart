@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:online_shop/models/product.dart';
 import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:online_shop/widgets/product_item.dart';
 import 'discount_banner.dart';
+import 'package:http/http.dart' as http;
 
 class Body extends StatefulWidget {
   @override
@@ -12,8 +15,31 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  CollectionReference products =
-      FirebaseFirestore.instance.collection("products");
+  int productsCount;
+  List products;
+  Product product;
+
+  // Future initialize() async {
+  //   products = [];
+  //   products = await service.getProducts();
+  //   setState(() {
+  //     productsCount = products.length;
+  //     products = products;
+  //   });
+  // }
+
+  Future getProducts() async {
+    String uri = "http://10.0.2.2:8000/api/product";
+    var response = await http.get(Uri.parse(uri));
+    return json.decode(response.body);
+  }
+
+  @override
+  void initState() {
+    getProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -142,35 +168,63 @@ class _BodyState extends State<Body> {
         ),
         Container(
           height: 600,
-          child: StreamBuilder<QuerySnapshot>(
-            //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
-            stream: products.where('price', isGreaterThan: 500000).snapshots(),
+          child: FutureBuilder(
+            future: getProducts(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (overscroll) {
-                    overscroll.disallowGlow();
-                  },
-                  child: GridView.count(
-                    // shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.72,
-                    padding: const EdgeInsets.all(10),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    scrollDirection: Axis.vertical,
-                    children: snapshot.data.docs
-                        .map((item) => ProductItem(
-                            item['id'],
-                            item['image'],
-                            item['name'],
-                            item['price'],
-                            item['desc'],
-                            item['category']))
-                        .toList(),
-                  ),
-                );
+                return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 0.72,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10),
+                    itemCount: snapshot.data['data'].length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Container(
+                          padding: const EdgeInsets.all(10),
+                          alignment: Alignment.center,
+                          child: ProductItem(
+                            product_code: snapshot.data['data'][index]
+                                ['product_code'],
+                            product_name: snapshot.data['data'][index]
+                                ['product_name'],
+                            product_image: snapshot.data['data'][index]
+                                ['product_image'],
+                            product_price: snapshot.data['data'][index]
+                                ['product_price'],
+                            product_desc: snapshot.data['data'][index]
+                                ['product_desc'],
+                            product_stock: snapshot.data['data'][index]
+                                ['product_stock'],
+                            category_id: snapshot.data['data'][index]
+                                ['category_id'],
+                          ));
+                    });
+                // return NotificationListener<OverscrollIndicatorNotification>(
+                //   onNotification: (overscroll) {
+                //     overscroll.disallowGlow();
+                //   },
+                //   child: GridView.count(
+                //     // shrinkWrap: true,
+                //     // physics: NeverScrollableScrollPhysics(),
+                //     crossAxisCount: 2,
+                //     childAspectRatio: 0.72,
+                //     padding: const EdgeInsets.all(10),
+                //     mainAxisSpacing: 10,
+                //     crossAxisSpacing: 10,
+                //     scrollDirection: Axis.vertical,
+                //     children: snapshot.data.docs
+                //         .map((item) => ProductItem(
+                //             item['product_code'],
+                //             item['product_name'],
+                //             item['product_image'],
+                //             item['product_price'],
+                //             item['product_desc'],
+                //             item['product_stock'],
+                //             item['category_id']))
+                //         .toList(),
+                //   ),
+                // );
               } else {
                 return Container();
               }

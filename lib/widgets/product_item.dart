@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:online_shop/models/product.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
 
 import '../constants.dart';
 
 class ProductItem extends StatelessWidget {
-  final String productId;
-  final String productImg;
-  final String productName;
-  final int productPrice;
-  final String productDesc;
-  final String productCategory;
+  // final Product product;
+  final String product_code;
+  final String product_name;
+  final String product_image;
+  final int product_price;
+  final String product_desc;
+  final int product_stock;
+  final int category_id;
 
-  ProductItem(this.productId, this.productImg, this.productName,
-      this.productPrice, this.productDesc, this.productCategory);
+  ProductItem(
+      {this.product_code,
+      this.product_name,
+      this.product_image,
+      this.product_price,
+      this.product_desc,
+      this.product_stock,
+      this.category_id});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +33,13 @@ class ProductItem extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ProductDetail2(
-              productId: productId,
-              productImg: productImg,
-              productName: productName,
-              productPrice: productPrice,
-              productDesc: productDesc,
-              productCategory: productCategory,
+              product_code: product_code,
+              product_name: product_name,
+              product_image: product_image,
+              product_price: product_price,
+              product_desc: product_desc,
+              product_stock: product_stock,
+              category_id: category_id,
             ),
           ),
         );
@@ -54,7 +64,7 @@ class ProductItem extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.network(
-                    productImg,
+                    "http://10.0.2.2:8000/storage/" + product_image,
                     width: double.infinity,
                     height: 200,
                   )),
@@ -66,7 +76,7 @@ class ProductItem extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(left: 2, right: 2),
                 child: Text(
-                  productName,
+                  product_name,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -82,7 +92,7 @@ class ProductItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
                   child: Text(
-                    "IDR " + formatNumber.format(productPrice).toString(),
+                    "IDR " + formatNumber.format(product_price).toString(),
                     style: TextStyle(
                         fontSize: 16,
                         color: kPrimaryColor,
