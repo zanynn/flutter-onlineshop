@@ -12,22 +12,20 @@ import '../../size_config.dart';
 import 'component/custom_app_bar.dart';
 
 class ProductDetail2 extends StatefulWidget {
-  final String product_code;
-  final String product_name;
-  final String product_image;
-  final int product_price;
-  final String product_desc;
-  final int product_stock;
-  final int category_id;
+  String productId;
+  String productImg;
+  String productName;
+  int productPrice;
+  String productDesc;
+  String productCategory;
 
   ProductDetail2(
-      {this.product_code,
-      this.product_name,
-      this.product_image,
-      this.product_price,
-      this.product_desc,
-      this.product_stock,
-      this.category_id});
+      {this.productId,
+      this.productImg,
+      this.productName,
+      this.productPrice,
+      this.productDesc,
+      this.productCategory});
 
   @override
   _ProductDetail2State createState() => _ProductDetail2State();
@@ -86,8 +84,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage("http://10.0.2.2:8000/storage/" +
-                              widget.product_image),
+                          image: NetworkImage(widget.productImg),
                           // image: NetworkImage(
                           //     "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
                         ),
@@ -122,7 +119,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                               child: Text(
                                 "IDR " +
                                     formatNumber
-                                        .format(widget.product_price)
+                                        .format(widget.productPrice)
                                         .toString(),
                                 style: TextStyle(
                                     color: kPrimaryColor, fontSize: 20),
@@ -134,7 +131,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                           padding: EdgeInsets.symmetric(
                               horizontal: getProportionateScreenWidth(20)),
                           child: Text(
-                            widget.product_name,
+                            widget.productName,
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ),
@@ -144,7 +141,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                             right: getProportionateScreenWidth(64),
                           ),
                           child: new DescriptionTextWidget(
-                              text: widget.product_desc),
+                              text: widget.productDesc),
                         ),
                       ],
                     ),
@@ -165,54 +162,57 @@ class _ProductDetail2State extends State<ProductDetail2> {
                           TopRoundedContainer(
                             color: Colors.white,
                             child: Padding(
-                                padding: EdgeInsets.only(
-                                  left: SizeConfig.screenWidth * 0.15,
-                                  right: SizeConfig.screenWidth * 0.15,
-                                  bottom: getProportionateScreenWidth(40),
-                                  top: getProportionateScreenWidth(15),
-                                ),
-                                child: DefaultButton(
-                                    text: "Add To Cart",
-                                    press: () {
-                                      setSize();
-                                      // int productCost =
-                                      //     widget.product_price * quantity;
-                                      // CollectionReference carts = FirebaseFirestore
-                                      //     .instance
-                                      //     .collection("carts");
-                                      // String orderCollection =
-                                      //     "Order " + levelOrder.toString();
+                              padding: EdgeInsets.only(
+                                left: SizeConfig.screenWidth * 0.15,
+                                right: SizeConfig.screenWidth * 0.15,
+                                bottom: getProportionateScreenWidth(40),
+                                top: getProportionateScreenWidth(15),
+                              ),
+                              child: DefaultButton(
+                                text: "Add To Cart",
+                                press: () {
+                                  setSize();
+                                  int productCost =
+                                      widget.productPrice * quantity;
+                                  CollectionReference carts = FirebaseFirestore
+                                      .instance
+                                      .collection("carts");
+                                  String orderCollection =
+                                      "Order " + levelOrder.toString();
 
-                                      // carts
-                                      //     .doc(userId)
-                                      //     .collection(orderCollection)
-                                      //     .doc(widget.productId)
-                                      //     .snapshots()
-                                      //     .listen((DocumentSnapshot event) async {
-                                      //ketika document ada, maka tidak ditambahkan pada cart
-                                      // if (event.exists) {
-                                      //   widget.productId = "";
+                                  carts
+                                      .doc(userId)
+                                      .collection(orderCollection)
+                                      .doc(widget.productId)
+                                      .snapshots()
+                                      .listen((DocumentSnapshot event) async {
+                                    //ketika document ada, maka tidak ditambahkan pada cart
+                                    if (event.exists) {
+                                      widget.productId = "";
 
-                                      //   _showScaffold("Product " +
-                                      //       widget.productName +
-                                      //       " already exist, please check your cart!");
-                                      // } else {
-                                      //   addProductToCart(
-                                      //       widget.productId,
-                                      //       widget.productName,
-                                      //       widget.productCategory,
-                                      //       widget.productImg,
-                                      //       productSize,
-                                      //       widget.productPrice,
-                                      //       quantity,
-                                      //       productCost);
+                                      _showScaffold("Product " +
+                                          widget.productName +
+                                          " already exist, please check your cart!");
+                                    } else {
+                                      addProductToCart(
+                                          widget.productId,
+                                          widget.productName,
+                                          widget.productCategory,
+                                          widget.productImg,
+                                          productSize,
+                                          widget.productPrice,
+                                          quantity,
+                                          productCost);
 
-                                      //   widget.productId = "";
-                                      //   _showScaffold("Product " +
-                                      //       widget.productName +
-                                      //       " successfully added!");
-                                      // }
-                                    })),
+                                      widget.productId = "";
+                                      _showScaffold("Product " +
+                                          widget.productName +
+                                          " successfully added!");
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
                           ),
                         ],
                       ),

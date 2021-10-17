@@ -1,41 +1,70 @@
 {
   "project_info": {
-    "project_number": "791985255440",
-    "project_id": "mzid-online-shop",
-    "storage_bucket": "mzid-online-shop.appspot.com"
+    "project_number": "124389774564",
+    "project_id": "online-shop-ce498",
+    "storage_bucket": "online-shop-ce498.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:791985255440:android:531f6a1e3e776c2d188695",
+        "mobilesdk_app_id": "1:124389774564:android:c204950332cbb07a9408f1",
         "android_client_info": {
           "package_name": "com.example.online_shop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "791985255440-4otuc711tnvmnoetjs4okpc21huptlvt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.online_shop",
-            "certificate_hash": "6034fe00c30ed0eb5742a70f9245d02fd90c3301"
-          }
-        },
-        {
-          "client_id": "791985255440-2hboes5l6pidsmaldpsuqaev0veq2q8p.apps.googleusercontent.com",
+          "client_id": "124389774564-8m9052cdf10ucsdo15hfn9nt44s6jl6r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAe4XJjYDvjfeqKHrcKDo1-RYsWdAhHGJ4"
+          "current_key": "AIzaSyBLDYVE1Q9JRK9yQEcH8KRGYhx0XmeqRA4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "791985255440-2hboes5l6pidsmaldpsuqaev0veq2q8p.apps.googleusercontent.com",
+              "client_id": "124389774564-8m9052cdf10ucsdo15hfn9nt44s6jl6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124389774564:android:33eec38a0c5bcc529408f1",
+        "android_client_info": {
+          "package_name": "com.silentcoder.online_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124389774564-go8aoe0bdeqqcqpnsou6dak6nsutjo74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.silentcoder.online_shop",
+            "certificate_hash": "6034fe00c30ed0eb5742a70f9245d02fd90c3301"
+          }
+        },
+        {
+          "client_id": "124389774564-8m9052cdf10ucsdo15hfn9nt44s6jl6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLDYVE1Q9JRK9yQEcH8KRGYhx0XmeqRA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124389774564-8m9052cdf10ucsdo15hfn9nt44s6jl6r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

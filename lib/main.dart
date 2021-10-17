@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         nextScreen: SplashScreen(),
         backgroundColor: Color(0xFF07080A),
         splashTransition: SplashTransition.scaleTransition,
-        duration: 15700,
+        duration: 10000,
         splashIconSize: 300,
       ),
       // home: SplashScreen(),
