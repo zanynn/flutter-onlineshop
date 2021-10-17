@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/login_page.dart';
+import 'package:online_shop/services/api.dart';
 import 'package:online_shop/services/authentication.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -32,6 +36,32 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       isLoading = true;
     });
+  }
+
+  void _handleLogin() async {
+    var data = {
+      'name': usernameController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'phone': phoneController.text,
+      'address': addressController.text,
+      'role': "User"
+    };
+
+    var res = await CallApi().postData(data, 'register');
+    var body = json.decode(res.body);
+    print(body);
+    if (body['success'] == true) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', body['token']);
+      localStorage.setString('user', json.encode(body['user']));
+
+      var userJson = localStorage.getString('user');
+      var user = json.decode(userJson);
+      print(user['id']);
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
   }
 
   @override
@@ -301,20 +331,21 @@ class _SignUpState extends State<SignUp> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        signUpWithEmail(
-                                usernameController.text,
-                                emailController.text,
-                                passwordController.text,
-                                phoneController.text,
-                                addressController.text)
-                            .then((result) {
-                          if (result != null) {
-                            _loadingbutton();
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                          }
-                        });
+                        _handleLogin();
+                        // signUpWithEmail(
+                        //         usernameController.text,
+                        //         emailController.text,
+                        //         passwordController.text,
+                        //         phoneController.text,
+                        //         addressController.text)
+                        //     .then((result) {
+                        //   if (result != null) {
+                        //     _loadingbutton();
+                        //     Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (context) => LoginPage()));
+                        //   }
+                        // });
                       }
                     },
                     color: Color(0xFF1C1C1C),

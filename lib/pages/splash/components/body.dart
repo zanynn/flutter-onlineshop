@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/widgets/default_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // This is the best practice
 import '../../../constants.dart';
@@ -29,6 +31,26 @@ class _BodyState extends State<Body> {
       "image": "assets/images/splash_3.png"
     },
   ];
+
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    // check if token is there
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    if (token != null) {
+      setState(() {
+        _isLoggedIn = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -71,7 +93,8 @@ class _BodyState extends State<Body> {
                       text: "Continue",
                       press: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginPage()));
+                            builder: (context) =>
+                                _isLoggedIn ? HomeScreen() : LoginPage()));
                       },
                     ),
                     Spacer(),

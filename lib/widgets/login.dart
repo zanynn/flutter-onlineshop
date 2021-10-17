@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
+import 'package:online_shop/services/api.dart';
 import 'package:online_shop/services/authentication.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../size_config.dart';
 
@@ -21,9 +26,57 @@ class _LoginState extends State<Login> {
   String error = "";
   bool passwordVisible = false;
   bool isLoading = false;
+  ScaffoldState scaffoldState;
+  _showMsg(msg) {
+    //
+    final snackBar = SnackBar(
+      content: Text(msg),
+      action: SnackBarAction(
+        label: 'Close',
+        onPressed: () {
+          // Some code to undo the change!
+        },
+      ),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
   void _loadingbutton() {
     setState(() {
       isLoading = true;
+    });
+  }
+
+  void _login() async {
+    setState(() {
+      isLoading = true;
+    });
+    var data = {
+      'email': emailController.text,
+      'password': passwordController.text
+    };
+
+    var res = await CallApi().postData(data, 'login');
+    var body = json.decode(res.body);
+    print(body);
+    // SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // localStorage.setString('token', body['token']);
+    // localStorage.setString('user', json.encode(body['user']));
+    // Navigator.push(
+    //     context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+
+    // if (body['success'] == true) {
+    //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+    //   localStorage.setString('token', body['token']);
+    //   localStorage.setString('user', json.encode(body['user']));
+    //   Navigator.push(
+    //       context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+    // } else {
+    //   _showMsg(body['message']);
+    // }
+
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -170,24 +223,7 @@ class _LoginState extends State<Login> {
                         Radius.circular(25),
                       ),
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        signInWithEmailAndPassword(
-                                emailController.text, passwordController.text)
-                            .then((result) {
-                          if (result != null) {
-                            _loadingbutton();
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return HomeScreen();
-                                },
-                              ),
-                            );
-                          }
-                        });
-                      }
-                    },
+                    onPressed: _login,
                     color: Color(0xFF1C1C1C),
                     elevation: 9.0,
                     splashColor: Colors.blue[200],
@@ -231,17 +267,17 @@ class _LoginState extends State<Login> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          signInWithGoogle().then((result) {
-                            if (result != null) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return HomeScreen();
-                                  },
-                                ),
-                              );
-                            }
-                          });
+                          // signInWithGoogle().then((result) {
+                          //   if (result != null) {
+                          //     Navigator.of(context).push(
+                          //       MaterialPageRoute(
+                          //         builder: (context) {
+                          //           return HomeScreen();
+                          //         },
+                          //       ),
+                          //     );
+                          //   }
+                          // });
                         },
                         child: Container(
                           margin: EdgeInsets.symmetric(

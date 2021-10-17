@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/product_discover.dart';
+import 'package:online_shop/services/api.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
 import 'package:online_shop/pages/order_history/order_list.dart';
 import 'package:online_shop/services/databases.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../enums.dart';
 import '../login_page.dart';
@@ -17,6 +21,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var userData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getUserInfo();
+    super.initState();
+  }
+
+  void _getUserInfo() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var userJson = localStorage.getString('user');
+    var user = json.decode(userJson);
+    setState(() {
+      userData = user;
+    });
+  }
+
+  void _logout() async {
+    // logout from the server ...
+    var res = await CallApi().getData('logout');
+    var body = json.decode(res.body);
+    if (body['success']) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('user');
+      localStorage.remove('token');
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => LoginPage()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,17 +107,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 UserAccountsDrawerHeader(
                   margin: const EdgeInsets.only(top: 35.0),
-                  accountName:
-                      Text(name, style: TextStyle(color: Colors.white)),
+                  accountName: Text(
+                      userData != null ? '${userData['name']}' : '',
+                      style: TextStyle(color: Colors.white)),
                   currentAccountPicture: CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(imageUrl),
+                    backgroundImage: NetworkImage(
+                        "https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png"),
                   ),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                   ),
                   accountEmail: Text(
-                    email,
+                    userData != null ? '${userData['email']}' : '',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -128,11 +164,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text('Logout'),
             leading: Icon(Icons.exit_to_app),
             onTap: () {
-              signOutGoogle();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) {
-                return LoginPage();
-              }), ModalRoute.withName('/'));
+              _logout();
+              // signOutGoogle();
+              // Navigator.of(context).pushAndRemoveUntil(
+              //     MaterialPageRoute(builder: (context) {
+              //   return LoginPage();
+              // }), ModalRoute.withName('/'));
             },
           ),
         ],
