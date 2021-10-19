@@ -2,29 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:online_shop/services/authentication.dart';
 
 Future<void> addProductToCart(
-    String productId,
-    String productName,
-    String productCategory,
-    String productImg,
-    String productSize,
-    int productPrice,
-    int productQty,
-    int productCost) async {
+  String product_id,
+  String product_code,
+  String product_name,
+  String product_category,
+  String product_image,
+  String product_size,
+  int product_price,
+  int product_qty,
+  int product_cost,
+) async {
   CollectionReference carts = FirebaseFirestore.instance.collection("carts");
   var itemCart = {
-    'productId': productId,
+    'product_id': product_id,
     'userId': userId,
-    'productName': productName,
-    'productCategory': productCategory,
-    'productPrice': productPrice,
-    'productImg': productImg,
-    'productSize': productSize,
-    'productQty': productQty,
-    'productCost': productCost,
+    'product_code': product_code,
+    'product_name': product_name,
+    'product_category': product_category,
+    'product_image': product_image,
+    'product_size': product_size,
+    'product_price': product_price,
+    'product_qty': product_qty,
+    'product_cost': product_cost,
   };
 
   String orderCollection = "Order " + levelOrder.toString();
-  carts.doc(userId).collection(orderCollection).doc(productId).set(itemCart);
+  carts.doc(userId).collection(orderCollection).doc(product_id).set(itemCart);
 
   carts.doc(userId).set({
     "userId": userId,
@@ -33,28 +36,28 @@ Future<void> addProductToCart(
   });
 }
 
-Future<void> deleteItemCart(String productId) async {
+Future<void> deleteItemCart(String product_id) async {
   CollectionReference carts = FirebaseFirestore.instance.collection("carts");
   String orderCollection = "Order " + levelOrder.toString();
 
   //menghapus data produk
-  carts.doc(userId).collection(orderCollection).doc(productId).delete();
+  carts.doc(userId).collection(orderCollection).doc(product_id).delete();
   print("item deleted");
 }
 
 Future<void> updateItemCart(
-    String productId, int productQty, int productPrice) {
+    String product_id, int product_qty, int product_price) {
   CollectionReference carts = FirebaseFirestore.instance.collection("carts");
   String orderCollection = "Order " + levelOrder.toString();
-  int productCost = productQty * productPrice;
+  int product_cost = product_qty * product_price;
   var updateData = {
-    'productQty': productQty,
-    'productCost': productCost,
+    'product_qty': product_qty,
+    'product_cost': product_cost,
   };
   carts
       .doc(userId)
       .collection(orderCollection)
-      .doc(productId)
+      .doc(product_id)
       .update(updateData);
 }
 

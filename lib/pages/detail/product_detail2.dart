@@ -12,20 +12,24 @@ import '../../size_config.dart';
 import 'component/custom_app_bar.dart';
 
 class ProductDetail2 extends StatefulWidget {
-  String productId;
-  String productImg;
-  String productName;
-  int productPrice;
-  String productDesc;
-  String productCategory;
+  String product_id;
+  String product_code;
+  String product_name;
+  String product_image;
+  String product_desc;
+  int product_price;
+  int product_stock;
+  String product_category;
 
   ProductDetail2(
-      {this.productId,
-      this.productImg,
-      this.productName,
-      this.productPrice,
-      this.productDesc,
-      this.productCategory});
+      {this.product_id,
+      this.product_code,
+      this.product_name,
+      this.product_image,
+      this.product_desc,
+      this.product_price,
+      this.product_stock,
+      this.product_category});
 
   @override
   _ProductDetail2State createState() => _ProductDetail2State();
@@ -35,7 +39,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<bool> sizeSelect = [true, false, false, false, false];
-  String productSize;
+  String product_size;
 
   int quantity = 1;
 
@@ -49,15 +53,15 @@ class _ProductDetail2State extends State<ProductDetail2> {
   void setSize() {
     setState(() {
       if (indexSize == 0) {
-        productSize = "S";
+        product_size = "S";
       } else if (indexSize == 1) {
-        productSize = "M";
+        product_size = "M";
       } else if (indexSize == 2) {
-        productSize = "L";
+        product_size = "L";
       } else if (indexSize == 3) {
-        productSize = "XL";
+        product_size = "XL";
       } else if (indexSize == 4) {
-        productSize = "XXL";
+        product_size = "XXL";
       }
     });
   }
@@ -84,9 +88,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage(widget.productImg),
-                          // image: NetworkImage(
-                          //     "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
+                          image: NetworkImage('http://10.0.2.2:8000/storage/'+ widget.product_image),
                         ),
                       ),
                     ),
@@ -119,7 +121,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                               child: Text(
                                 "IDR " +
                                     formatNumber
-                                        .format(widget.productPrice)
+                                        .format(widget.product_price)
                                         .toString(),
                                 style: TextStyle(
                                     color: kPrimaryColor, fontSize: 20),
@@ -131,7 +133,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                           padding: EdgeInsets.symmetric(
                               horizontal: getProportionateScreenWidth(20)),
                           child: Text(
-                            widget.productName,
+                            widget.product_name,
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ),
@@ -141,7 +143,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                             right: getProportionateScreenWidth(64),
                           ),
                           child: new DescriptionTextWidget(
-                              text: widget.productDesc),
+                              text: widget.product_desc),
                         ),
                       ],
                     ),
@@ -172,8 +174,8 @@ class _ProductDetail2State extends State<ProductDetail2> {
                                 text: "Add To Cart",
                                 press: () {
                                   setSize();
-                                  int productCost =
-                                      widget.productPrice * quantity;
+                                  int product_cost =
+                                      widget.product_price * quantity;
                                   CollectionReference carts = FirebaseFirestore
                                       .instance
                                       .collection("carts");
@@ -183,30 +185,31 @@ class _ProductDetail2State extends State<ProductDetail2> {
                                   carts
                                       .doc(userId)
                                       .collection(orderCollection)
-                                      .doc(widget.productId)
+                                      .doc(widget.product_id)
                                       .snapshots()
                                       .listen((DocumentSnapshot event) async {
                                     //ketika document ada, maka tidak ditambahkan pada cart
                                     if (event.exists) {
-                                      widget.productId = "";
+                                      widget.product_id = "";
 
                                       _showScaffold("Product " +
-                                          widget.productName +
+                                          widget.product_name +
                                           " already exist, please check your cart!");
                                     } else {
                                       addProductToCart(
-                                          widget.productId,
-                                          widget.productName,
-                                          widget.productCategory,
-                                          widget.productImg,
-                                          productSize,
-                                          widget.productPrice,
+                                          widget.product_id,
+                                          widget.product_code,
+                                          widget.product_name,
+                                          widget.product_category,
+                                          widget.product_image,
+                                          product_size,
+                                          widget.product_price,
                                           quantity,
-                                          productCost);
+                                          product_cost);
 
-                                      widget.productId = "";
+                                      widget.product_id = "";
                                       _showScaffold("Product " +
-                                          widget.productName +
+                                          widget.product_name +
                                           " successfully added!");
                                     }
                                   });

@@ -46,14 +46,15 @@ class _CartScreenState extends State<CartScreen> {
                     return Column(
                       children: snapshot.data.docs
                           .map((item) => CartCard(
-                                item['productImg'],
-                                item['productName'],
-                                item['productCategory'],
-                                item['productPrice'],
-                                item['productId'],
-                                item['productSize'],
-                                item['productQty'],
-                                item['productCost'],
+                                item['product_id'],
+                                item['product_code'],
+                                item['product_name'],
+                                item['product_category'],
+                                item['product_image'],
+                                item['product_size'],
+                                item['product_price'],
+                                item['product_qty'],
+                                item['product_cost'],
                               ))
                           .toList(),
                     );

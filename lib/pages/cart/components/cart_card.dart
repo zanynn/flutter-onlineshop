@@ -6,23 +6,26 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CartCard extends StatefulWidget {
-  String productImg;
-  String productName;
-  String productCategory;
-  int productPrice;
-  String productId;
-  String productSize;
-  int productQty;
-  int productCost;
+  String product_id;
+  String product_code;
+  String product_name;
+  String product_category;
+  String product_image;
+  String product_size;
+  int product_price;
+  int product_qty;
+  int product_cost;
   CartCard(
-      this.productImg,
-      this.productName,
-      this.productCategory,
-      this.productPrice,
-      this.productId,
-      this.productSize,
-      this.productQty,
-      this.productCost);
+    this.product_id,
+    this.product_code,
+    this.product_name,
+    this.product_category,
+    this.product_image,
+    this.product_size,
+    this.product_price,
+    this.product_qty,
+    this.product_cost,
+  );
 
   @override
   _CartCardState createState() => _CartCardState();
@@ -46,7 +49,7 @@ class _CartCardState extends State<CartCard> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.network(
-                widget.productImg,
+                widget.product_image,
               ),
             ),
           ),
@@ -58,7 +61,7 @@ class _CartCardState extends State<CartCard> {
             Row(
               children: [
                 Text(
-                  widget.productName,
+                  widget.product_name,
                   style: TextStyle(color: Colors.black, fontSize: 16),
                   maxLines: 2,
                 ),
@@ -66,7 +69,7 @@ class _CartCardState extends State<CartCard> {
                   children: [
                     SizedBox(height: 2),
                     Text(
-                      " Size : " + widget.productSize,
+                      " Size : " + widget.product_size,
                       style: TextStyle(color: Colors.grey, fontSize: 14),
                       // maxLines: 2,
                     ),
@@ -84,13 +87,13 @@ class _CartCardState extends State<CartCard> {
                         Text(
                           " IDR " +
                               formatNumber
-                                  .format(widget.productPrice)
+                                  .format(widget.product_price)
                                   .toString(),
                           style: TextStyle(color: Colors.black, fontSize: 12),
                           // maxLines: 2,
                         ),
                         Text(
-                          "  x " + widget.productQty.toString(),
+                          "  x " + widget.product_qty.toString(),
                           style: TextStyle(color: kTextColor, fontSize: 14),
                           // maxLines: 2,
                         ),
@@ -98,7 +101,7 @@ class _CartCardState extends State<CartCard> {
                     ),
                     Text(
                       " IDR " +
-                          formatNumber.format(widget.productCost).toString(),
+                          formatNumber.format(widget.product_cost).toString(),
                       style: TextStyle(color: kPrimaryColor, fontSize: 16),
                       // maxLines: 2,
                     ),
@@ -121,7 +124,7 @@ class _CartCardState extends State<CartCard> {
                                   ),
                                   onPressed: () {
                                     //menghapus item cart
-                                    deleteItemCart(widget.productId);
+                                    deleteItemCart(widget.product_id);
                                   }),
                             ],
                           ),
@@ -143,16 +146,16 @@ class _CartCardState extends State<CartCard> {
                         icon: Icon(Icons.chevron_left),
                         onPressed: () {
                           setState(() {
-                            if (widget.productQty > 1) {
-                              widget.productQty--;
+                            if (widget.product_qty > 1) {
+                              widget.product_qty--;
                             }
                           });
-                          updateItemCart(widget.productId, widget.productQty,
-                              widget.productPrice);
+                          updateItemCart(widget.product_id, widget.product_qty,
+                              widget.product_price);
                         }),
                     Container(
                         child: Text(
-                      widget.productQty.toString(),
+                      widget.product_qty.toString(),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -163,10 +166,10 @@ class _CartCardState extends State<CartCard> {
                         icon: Icon(Icons.chevron_right),
                         onPressed: () {
                           setState(() {
-                            widget.productQty++;
+                            widget.product_qty++;
                           });
-                          updateItemCart(widget.productId, widget.productQty,
-                              widget.productPrice);
+                          updateItemCart(widget.product_id, widget.product_qty,
+                              widget.product_price);
                         }),
                   ],
                 ),
