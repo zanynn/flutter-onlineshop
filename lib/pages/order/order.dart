@@ -222,13 +222,13 @@ class Order extends StatelessWidget {
                         return Column(
                           children: snapshot.data.docs
                               .map((item) => OrderItem(
-                                    item['productImg'],
-                                    item['productName'],
-                                    item['productCategory'],
-                                    item['productPrice'],
-                                    item['productSize'],
-                                    item['productQty'],
-                                    item['productCost'],
+                                    item['product_image'],
+                                    item['product_name'],
+                                    item['product_category'],
+                                    item['product_price'],
+                                    item['product_size'],
+                                    item['product_qty'],
+                                    item['product_cost'],
                                   ))
                               .toList(),
                         );

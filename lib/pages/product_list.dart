@@ -53,7 +53,7 @@ class ProductList extends StatelessWidget {
                 child: StreamBuilder<QuerySnapshot>(
                   //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
                   stream: products
-                      .where('category', isEqualTo: category)
+                      .where('product_category', isEqualTo: category)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -66,12 +66,15 @@ class ProductList extends StatelessWidget {
                         scrollDirection: Axis.vertical,
                         children: snapshot.data.docs
                             .map((item) => ProductItem(
-                                item['id'],
-                                item['image'],
-                                item['name'],
-                                item['price'],
-                                item['desc'],
-                                item['category']))
+                                  item['product_id'],
+                                  item['product_code'],
+                                  item['product_name'],
+                                  item['product_image'],
+                                  item['product_desc'],
+                                  item['product_price'],
+                                  item['product_stock'],
+                                  item['product_category'],
+                                ))
                             .toList(),
                       );
                     } else {

@@ -101,7 +101,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                       if (snapshot.hasData) {
                         //menghitung total biaya
                         snapshot.data.docs
-                            .map((e) => total += e["productCost"])
+                            .map((e) => total += e["product_cost"])
                             .toList();
                         totalOrder = total;
                         return Container(

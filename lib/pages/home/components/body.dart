@@ -112,11 +112,11 @@ class _BodyState extends State<Body> {
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProductList(category: "Helmet")));
+                        builder: (context) => ProductList(category: "Sepatu")));
                   },
                   child: CategoryItem(
                     image: 'https://img.icons8.com/ios/2x/motorbike-helmet.png',
-                    name: "Helmet",
+                    name: "Helm",
                   ),
                 ),
               ],
@@ -144,7 +144,9 @@ class _BodyState extends State<Body> {
           height: 600,
           child: StreamBuilder<QuerySnapshot>(
             //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
-            stream: products.where('price', isGreaterThan: 500000).snapshots(),
+            stream: products
+                .where('product_price', isGreaterThan: 500000)
+                .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return NotificationListener<OverscrollIndicatorNotification>(
@@ -162,12 +164,15 @@ class _BodyState extends State<Body> {
                     scrollDirection: Axis.vertical,
                     children: snapshot.data.docs
                         .map((item) => ProductItem(
-                            item['id'],
-                            item['image'],
-                            item['name'],
-                            item['price'],
-                            item['desc'],
-                            item['category']))
+                              item['product_id'],
+                              item['product_code'],
+                              item['product_name'],
+                              item['product_image'],
+                              item['product_desc'],
+                              item['product_price'],
+                              item['product_stock'],
+                              item['product_category'],
+                            ))
                         .toList(),
                   ),
                 );
