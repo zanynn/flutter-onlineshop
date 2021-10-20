@@ -1,3 +1,4 @@
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -100,9 +101,10 @@ class Order extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Container(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     buyerName,
                                     textAlign: TextAlign.right,
+                                    maxLines: 1,
                                     style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
@@ -130,12 +132,15 @@ class Order extends StatelessWidget {
                                 ),
                               ),
                               Expanded(
-                                child: Text(
-                                  email,
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  child: AutoSizeText(
+                                    email,
+                                    textAlign: TextAlign.right,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -147,18 +152,28 @@ class Order extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Address",
-                                style: TextStyle(
-                                  fontSize: 17,
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Address",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Text(
-                                buyerAddress,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Container(
+                                  child: AutoSizeText(
+                                    buyerAddress,
+                                    textAlign: TextAlign.right,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -169,18 +184,28 @@ class Order extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Phone",
-                                style: TextStyle(
-                                  fontSize: 17,
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Phone",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Text(
-                                buyerPhone,
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Container(
+                                  child: AutoSizeText(
+                                    buyerPhone,
+                                    textAlign: TextAlign.right,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
