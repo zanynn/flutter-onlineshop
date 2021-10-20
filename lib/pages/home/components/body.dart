@@ -14,6 +14,8 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   CollectionReference products =
       FirebaseFirestore.instance.collection("products");
+  CollectionReference categories =
+      FirebaseFirestore.instance.collection("categories");
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -53,78 +55,36 @@ class _BodyState extends State<Body> {
 
   Widget _category() {
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        children: <Widget>[
-          Container(
-            // height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                //ITEM CATEGORY
-                // Setiap kategori mengirimkan namanya agar dapat diterima dan di filter pada halaman Product List
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) =>
-                            ProductList(category: "T-Shirt")));
-                  },
-                  child: CategoryItem(
-                    image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                    name: "T-Shirt",
-                  ),
-                ),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProductList(category: "Jacket")));
-                  },
-                  child: CategoryItem(
-                    image: 'https://img.icons8.com/ios/2x/tracksuit.png',
-                    name: "Jacket",
-                  ),
-                ),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProductList(category: "Pants")));
-                  },
-                  child: CategoryItem(
-                    image: 'https://img.icons8.com/ios/2x/trousers.png',
-                    name: "Pants",
-                  ),
-                ),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) =>
-                            ProductList(category: "Accessories")));
-                  },
-                  child: CategoryItem(
-                    image: 'https://img.icons8.com/ios/2x/apple-watch.png',
-                    name: "Accessories",
-                  ),
-                ),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProductList(category: "Sepatu")));
-                  },
-                  child: CategoryItem(
-                    image: 'https://img.icons8.com/ios/2x/motorbike-helmet.png',
-                    name: "Helm",
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+        margin: EdgeInsets.only(left: 10, right: 10),
+        height: 99,
+        child: Container(
+          child: StreamBuilder<QuerySnapshot>(
+              stream: categories.snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: snapshot.data.docs
+                        .map((item) => InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductList(
+                                            category: item['category_name'])));
+                              },
+                              child: CategoryItem(
+                                image:
+                                    'https://img.icons8.com/ios/2x/trousers.png',
+                                name: item['category_name'],
+                              ),
+                            ))
+                        .toList(),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+        ));
   }
 
   Widget _featuredProduct() {

@@ -9,22 +9,25 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-          backgroundColor: kPrimaryColor,
-          // backgroundColor: Color(color),
-          child: Container(
-            height: 40,
-            child: Image(
-              color: Colors.white,
-              image: NetworkImage(image),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      child: Column(
+        children: [
+          CircleAvatar(
+            maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
+            backgroundColor: kPrimaryColor,
+            // backgroundColor: Color(color),
+            child: Container(
+              height: 40,
+              child: Image(
+                color: Colors.white,
+                image: NetworkImage(image),
+              ),
             ),
           ),
-        ),
-        Text(name)
-      ],
+          Text(name)
+        ],
+      ),
     );
   }
 }
