@@ -71,7 +71,7 @@ class ProductItem extends StatelessWidget {
                       fit: BoxFit.fill,
                       image: NetworkImage(
                           //gambar sementara
-                          "https://png.pngtree.com/png-vector/20190225/ourlarge/pngtree-vector-avatar-icon-png-image_702436.jpg"),
+                          "http://10.0.2.2:8000" + product_image),
                     ),
                   ),
                 ),

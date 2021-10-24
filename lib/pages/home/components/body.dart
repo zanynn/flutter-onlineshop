@@ -73,8 +73,8 @@ class _BodyState extends State<Body> {
                                             category: item['category_name'])));
                               },
                               child: CategoryItem(
-                                image:
-                                    'https://img.icons8.com/ios/2x/trousers.png',
+                                image: 'http://10.0.2.2:8000' +
+                                    item['category_icon'],
                                 name: item['category_name'],
                               ),
                             ))
@@ -105,7 +105,7 @@ class _BodyState extends State<Body> {
           child: StreamBuilder<QuerySnapshot>(
             //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
             stream: products
-                .where('product_price', isGreaterThan: 500000)
+                .where('product_price', isGreaterThan: 100000)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {

@@ -88,7 +88,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage('http://10.0.2.2:8000/storage/'+ widget.product_image),
+                          image: NetworkImage('http://10.0.2.2:8000'+ widget.product_image),
                         ),
                       ),
                     ),
