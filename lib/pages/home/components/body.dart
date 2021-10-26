@@ -105,7 +105,8 @@ class _BodyState extends State<Body> {
           child: StreamBuilder<QuerySnapshot>(
             //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
             stream: products
-                .where('product_price', isGreaterThan: 100000)
+                .where('product_price', isGreaterThan: 500000)
+                .where('product_stock', isGreaterThan: 5)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {

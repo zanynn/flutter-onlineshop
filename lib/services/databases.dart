@@ -77,12 +77,51 @@ Future<void> checkoutOrder(String name, String address, String phone,
     'status': status
   };
   orders.add(orderData);
-
+  updateStock(collectionRef);
   //update levelOrder User
   int level = levelOrder + 1;
   CollectionReference users = FirebaseFirestore.instance.collection("users");
   var updateLevel = {'levelOrder': level};
   users.doc(userId).update(updateLevel);
+}
+
+Future<void> updateStock(String collectionRef) async {
+  QuerySnapshot productsOrder = await FirebaseFirestore.instance
+      .collection("carts")
+      .doc(userId)
+      .collection(collectionRef)
+      .get();
+  String product_id;
+  int product_qty;
+  productsOrder.docs.forEach(
+    (data) {
+      if (userId == data["userId"]) {
+        product_id = data["product_id"];
+        product_qty = data["product_qty"];
+        updateStockAction(product_id, product_qty);
+      }
+    },
+  );
+}
+
+//update stok produk
+Future<void> updateStockAction(String product_id, int product_qty) async {
+  QuerySnapshot productSnapShot =
+      await FirebaseFirestore.instance.collection("products").get();
+  int currentStock;
+  productSnapShot.docs.forEach(
+    (data) {
+      if (product_id == data["product_id"]) {
+        currentStock = data["product_stock"] - product_qty;
+      }
+    },
+  );
+  var updateStock = {
+    'product_stock': currentStock,
+  };
+  CollectionReference productUpdate =
+      FirebaseFirestore.instance.collection("products");
+  productUpdate.doc(product_id).update(updateStock);
 }
 
 Future<void> getUserLevel() async {
