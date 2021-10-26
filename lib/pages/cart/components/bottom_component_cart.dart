@@ -392,7 +392,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                       .add_Hms();
                                               String formattedDateNow =
                                                   formatter.format(now);
-                                              String status = "Unverified";
+                                              String status = "Unconfirmed";
                                               checkoutOrder(
                                                   nameController.text,
                                                   addressController.text,

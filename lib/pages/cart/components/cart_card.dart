@@ -49,7 +49,7 @@ class _CartCardState extends State<CartCard> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.network(
-                widget.product_image,
+                'http://10.0.2.2:8000' + widget.product_image,
               ),
             ),
           ),

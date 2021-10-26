@@ -36,8 +36,7 @@ class OrderItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage(
-                        'http://10.0.2.2:8000/storage/' + productImg),
+                    image: NetworkImage('http://10.0.2.2:8000' + productImg),
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:online_shop/pages/order/components/order_productItem.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/pages/order_history/order_list.dart';
 import 'package:online_shop/widgets/default_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../size_config.dart';
 
@@ -28,6 +29,12 @@ class Order extends StatelessWidget {
       this.orderCollection,
       this.totalOrder,
       this.status});
+
+  void launchWhatsApp(@required number, @required message) async {
+    String url = "whatsapp://send?phone=$number&text=$message";
+
+    await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,37 +327,109 @@ class Order extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        status == "Unverified"
-                            ? Text(
-                                "Unverified",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.orangeAccent[400]),
-                              )
-                            : Text(
-                                "Success",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.greenAccent[400]),
-                              ),
+                        if (status == "Unconfirmed") ...[
+                          Text(
+                            "Unconfirmed",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.orangeAccent[400]),
+                          )
+                        ] else if (status == "Confirmed") ...[
+                          Text(
+                            "Confirmed",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.orangeAccent[400]),
+                          )
+                        ] else if (status == "Delivered") ...[
+                          Text(
+                            "Delivered",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.orangeAccent[400]),
+                          )
+                        ] else if (status == "Success") ...[
+                          Text(
+                            "Success",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.greenAccent[400]),
+                          )
+                        ] else ...[
+                          Text(
+                            "Failed",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.orangeAccent[400]),
+                          )
+                        ],
+                        // status == "Unverified"
+                        //     ? Text(
+                        //         "Unverified",
+                        //         style: TextStyle(
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 20,
+                        //             color: Colors.orangeAccent[400]),
+                        //       )
+                        //     : Text(
+                        //         "Success",
+                        //         style: TextStyle(
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 20,
+                        //             color: Colors.greenAccent[400]),
+                        //       ),
                       ],
                     ),
-                    status == "Unverified"
-                        ? Text(
-                            "Please contact the admin for verify your order.",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.white),
-                          )
-                        : Text(
-                            "Your order has been successful. Thank's for buying",
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.white),
-                          ),
-                    status == "Unverified"
+                    if (status == "Unconfirmed") ...[
+                      Text(
+                        "Pesanan belum dikonfirmasi. Silahkan menghubungi admin untuk melanjutnkan proses transaksi",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ] else if (status == "Confirmed") ...[
+                      Text(
+                        "Pesanan telah dikonfirmasi. Admin mempersiapkan proses pengiriman.",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ] else if (status == "Delivered") ...[
+                      Text(
+                        "Pesanan dalam proses pengiriman.",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ] else if (status == "Success") ...[
+                      Text(
+                        "Pesanan sukses. Pesanan telah sampai pada tujuan. Terima kasih",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ] else ...[
+                      Text(
+                        "Pesanan gagal.",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ],
+                    // status == "Unverified"
+                    //     ? Text(
+                    //         "Please contact the admin for verify your order.",
+                    //         style: TextStyle(
+                    //             fontStyle: FontStyle.italic,
+                    //             color: Colors.white),
+                    //       )
+                    //     : Text(
+                    //         "Your order has been successful. Thank's for buying",
+                    //         style: TextStyle(
+                    //             fontStyle: FontStyle.italic,
+                    //             color: Colors.white),
+                    //       ),
+                    status != "Success"
                         ? Row(
                             children: [
                               Image.network(
@@ -365,6 +444,19 @@ class Order extends StatelessWidget {
                         : Container(),
                   ],
                 ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+              width: double.infinity,
+              height: 50,
+              // color: Color(0xFF1C1C1C),
+              child: DefaultButton(
+                press: () {
+                  launchWhatsApp("+62143614124",
+                      "Halo Admin, saya pembeli atas nama $buyerName ingin mengkonfirmasi pesanan.");
+                },
+                text: "Chat with Admin (WhatsApp)",
               ),
             ),
             Container(
