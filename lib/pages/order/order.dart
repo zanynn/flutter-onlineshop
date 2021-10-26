@@ -333,7 +333,7 @@ class Order extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.orangeAccent[400]),
+                                color: Color(0xffFB6340)),
                           )
                         ] else if (status == "Confirmed") ...[
                           Text(
@@ -341,7 +341,7 @@ class Order extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.orangeAccent[400]),
+                                color: Color(0xff007BFF)),
                           )
                         ] else if (status == "Delivered") ...[
                           Text(
@@ -349,7 +349,7 @@ class Order extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.orangeAccent[400]),
+                                color: Color(0xff11CDEF)),
                           )
                         ] else if (status == "Success") ...[
                           Text(
@@ -357,7 +357,7 @@ class Order extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.greenAccent[400]),
+                                color: Color(0xff2DCE89)),
                           )
                         ] else ...[
                           Text(
@@ -365,7 +365,7 @@ class Order extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: Colors.orangeAccent[400]),
+                                color: Color(0xffF5365C)),
                           )
                         ],
                         // status == "Unverified"
@@ -454,7 +454,7 @@ class Order extends StatelessWidget {
                     // color: Color(0xFF1C1C1C),
                     child: DefaultButton(
                       press: () {
-                        launchWhatsApp("+62143614124",
+                        launchWhatsApp("+6282143614124",
                             "Halo Admin, saya pembeli atas nama $buyerName ingin mengkonfirmasi pesanan.");
                       },
                       text: "Chat with Admin (WhatsApp)",

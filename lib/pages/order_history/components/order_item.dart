@@ -80,7 +80,7 @@ class OrderItem extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orangeAccent[400]),
+                            color: Color(0xffFB6340)),
                       )
                     ] else if (status == "Confirmed") ...[
                       Text(
@@ -88,7 +88,7 @@ class OrderItem extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orangeAccent[400]),
+                            color: Color(0xff007BFF)),
                       )
                     ] else if (status == "Delivered") ...[
                       Text(
@@ -96,7 +96,7 @@ class OrderItem extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orangeAccent[400]),
+                            color: Color(0xff11CDEF)),
                       )
                     ] else if (status == "Success") ...[
                       Text(
@@ -104,7 +104,7 @@ class OrderItem extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.greenAccent[400]),
+                            color: Color(0xff2DCE89)),
                       )
                     ] else ...[
                       Text(
@@ -112,7 +112,7 @@ class OrderItem extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orangeAccent[400]),
+                            color: Color(0xffF5365C)),
                       )
                     ],
                   ],
