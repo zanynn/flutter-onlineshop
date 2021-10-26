@@ -446,19 +446,21 @@ class Order extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-              width: double.infinity,
-              height: 50,
-              // color: Color(0xFF1C1C1C),
-              child: DefaultButton(
-                press: () {
-                  launchWhatsApp("+62143614124",
-                      "Halo Admin, saya pembeli atas nama $buyerName ingin mengkonfirmasi pesanan.");
-                },
-                text: "Chat with Admin (WhatsApp)",
-              ),
-            ),
+            status != "Success"
+                ? Container(
+                    margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                    width: double.infinity,
+                    height: 50,
+                    // color: Color(0xFF1C1C1C),
+                    child: DefaultButton(
+                      press: () {
+                        launchWhatsApp("+62143614124",
+                            "Halo Admin, saya pembeli atas nama $buyerName ingin mengkonfirmasi pesanan.");
+                      },
+                      text: "Chat with Admin (WhatsApp)",
+                    ),
+                  )
+                : Container(),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               width: double.infinity,

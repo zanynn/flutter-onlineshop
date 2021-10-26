@@ -59,33 +59,78 @@ class OrderItem extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("#" + collectionRef,
-                      style: TextStyle(
-                        color: Colors.grey,
-                      )),
-                  Text(orderDateTime,
-                      style: TextStyle(
-                        color: Colors.grey,
-                      )),
-                ],
-              ),
-              trailing: status == "Unverified"
-                  ? Text("Unverified",
-                      style: TextStyle(
-                        color: Colors.orangeAccent[400],
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ))
-                  : Text("Success",
-                      style: TextStyle(
-                        color: Colors.greenAccent[400],
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      )),
-            ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("#" + collectionRef,
+                        style: TextStyle(
+                          color: Colors.grey,
+                        )),
+                    Text(orderDateTime,
+                        style: TextStyle(
+                          color: Colors.grey,
+                        )),
+                  ],
+                ),
+                trailing: Column(
+                  children: [
+                    if (status == "Unconfirmed") ...[
+                      Text(
+                        "Unconfirmed",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orangeAccent[400]),
+                      )
+                    ] else if (status == "Confirmed") ...[
+                      Text(
+                        "Confirmed",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orangeAccent[400]),
+                      )
+                    ] else if (status == "Delivered") ...[
+                      Text(
+                        "Delivered",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orangeAccent[400]),
+                      )
+                    ] else if (status == "Success") ...[
+                      Text(
+                        "Success",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.greenAccent[400]),
+                      )
+                    ] else ...[
+                      Text(
+                        "Failed",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orangeAccent[400]),
+                      )
+                    ],
+                  ],
+                )
+                // status == "Unverified"
+                //     ? Text("Unverified",
+                //         style: TextStyle(
+                //           color: Colors.orangeAccent[400],
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.bold,
+                //         ))
+                //     : Text("Success",
+                //         style: TextStyle(
+                //           color: Colors.greenAccent[400],
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.bold,
+                //         )),
+                ),
             Divider(),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 5),
