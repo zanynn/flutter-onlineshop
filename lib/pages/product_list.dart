@@ -54,6 +54,7 @@ class ProductList extends StatelessWidget {
                   //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
                   stream: products
                       .where('product_category', isEqualTo: category)
+                      .where('product_stock', isGreaterThan: 5)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
