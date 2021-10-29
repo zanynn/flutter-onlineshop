@@ -89,7 +89,7 @@ class _ProductDiscoveryState extends State<ProductDiscovery> {
                   stream: (key != "" && key != null)
                       ? products
                           .where("product_name", isEqualTo: key)
-                          .where('product_stock', isGreaterThan: 5)
+                          // .where('product_stock', isGreaterThan: 5)
                           .snapshots()
                       : products.snapshots(),
                   builder: (context, snapshot) {
