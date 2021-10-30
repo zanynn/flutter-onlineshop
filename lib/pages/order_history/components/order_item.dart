@@ -13,17 +13,18 @@ class OrderItem extends StatelessWidget {
   final String orderDateTime;
   final String status;
   final String collectionRef;
+  final String note;
 
   OrderItem(
-    this.name,
-    this.userEmail,
-    this.address,
-    this.phone,
-    this.totalOrder,
-    this.orderDateTime,
-    this.status,
-    this.collectionRef,
-  );
+      this.name,
+      this.userEmail,
+      this.address,
+      this.phone,
+      this.totalOrder,
+      this.orderDateTime,
+      this.status,
+      this.collectionRef,
+      this.note);
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
@@ -46,6 +47,7 @@ class OrderItem extends StatelessWidget {
                   totalOrder: totalOrder,
                   orderCollection: collectionRef,
                   status: status,
+                  note: note,
                 )));
       },
       child: Container(

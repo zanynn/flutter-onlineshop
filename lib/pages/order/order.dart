@@ -47,7 +47,7 @@ class Order extends StatelessWidget {
     //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
     orderSnapShot.docs.forEach(
       (data) {
-        docId = data.id.toUpperCase();
+        docId = data.id;
       },
     );
   }
@@ -447,7 +447,7 @@ class Order extends StatelessWidget {
                 ? Container(
                     margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                     width: double.infinity,
-                    height: 45,
+                    height: 50,
                     // color: Color(0xFF1C1C1C),
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
@@ -458,9 +458,10 @@ class Order extends StatelessWidget {
                             "==[KONFIRMASI PESANAN]==\nKode : #$docId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat langsung dikirim tanpa mengubah apapun)");
                       },
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Confirm to Admin",
+                            "Konfirmasikan ke Admin",
                             style: TextStyle(
                               fontSize: getProportionateScreenWidth(18),
                               color: Colors.white,
