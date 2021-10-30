@@ -1,3 +1,4 @@
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -36,6 +37,10 @@ class _LoginState extends State<Login> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          SizedBox(
+            height: 5,
+          ),
+          errorMessageLogin != null ? showAlert() : Container(),
           Text(
             "Welcome To",
             style: TextStyle(
@@ -186,6 +191,10 @@ class _LoginState extends State<Login> {
                             );
                           }
                         });
+                      } else {
+                        setState(() {
+                          errorMessageLogin = errorMessageLogin;
+                        });
                       }
                     },
                     color: Color(0xFF1C1C1C),
@@ -287,6 +296,46 @@ class _LoginState extends State<Login> {
           // ),
         ],
       ),
+    );
+  }
+
+  Widget showAlert() {
+    setState(() {
+      errorMessageLogin = errorMessageLogin;
+    });
+    if (errorMessageLogin != null) {
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                errorMessageLogin,
+                maxLines: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      errorMessageLogin = null;
+                    });
+                  }),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
     );
   }
 }

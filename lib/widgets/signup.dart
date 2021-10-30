@@ -1,3 +1,4 @@
+import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +43,10 @@ class _SignUpState extends State<SignUp> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          SizedBox(
+            height: 5,
+          ),
+          errorMessageRegister != null ? showAlert() : Container(),
           Text(
             "You must have an account",
             style: TextStyle(
@@ -313,6 +318,10 @@ class _SignUpState extends State<SignUp> {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => LoginPage()));
+                          } else {
+                            setState(() {
+                              errorMessageRegister = errorMessageRegister;
+                            });
                           }
                         });
                       }
@@ -340,6 +349,46 @@ class _SignUpState extends State<SignUp> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget showAlert() {
+    setState(() {
+      errorMessageRegister = errorMessageRegister;
+    });
+    if (errorMessageRegister != null) {
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                errorMessageRegister,
+                maxLines: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      errorMessageRegister = null;
+                    });
+                  }),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
     );
   }
 }

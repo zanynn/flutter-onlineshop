@@ -18,6 +18,7 @@ String phone;
 String userId;
 String address;
 int levelOrder;
+String _error;
 
 String errorMessageRegister;
 String errorMessageLogin;
@@ -127,6 +128,17 @@ Future<User> signUpWithEmail(String _username, String _email, String _password,
     return user;
     // print(result);
   } catch (e) {
+    if (e.code == 'email-already-in-use') {
+      errorMessageRegister = "Email already in use.";
+    } else if (e.code == 'operation-not-allowed') {
+      errorMessageRegister = "Email/Password must be filled.";
+    } else if (e.code == 'unknown') {
+      errorMessageRegister = "Empty input not allowed";
+    } else if (e.code == 'invalid-email') {
+      errorMessageRegister = "Invalid Email";
+    } else if (e.code == 'weak-password') {
+      errorMessageRegister = "Weak Password, must be more than 6 character";
+    }
     print(e.toString());
     return null;
   }
@@ -162,6 +174,15 @@ Future<User> signInWithEmailAndPassword(String _email, String _password) async {
     userId = user.uid;
     return user;
   } catch (e) {
+    if (e.code == 'user-not-found') {
+      errorMessageLogin = "No user found for that email.";
+    } else if (e.code == 'wrong-password') {
+      errorMessageLogin = "Wrong password provided for that user.";
+    } else if (e.code == 'unknown') {
+      errorMessageLogin = "Empty input not allowed";
+    } else if (e.code == 'invalid-email') {
+      errorMessageLogin = "Invalid Email";
+    }
     print(e.toString());
     return null;
   }
