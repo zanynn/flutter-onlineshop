@@ -32,6 +32,7 @@ class _OrderListState extends State<OrderList> {
                   return Column(
                     children: snapshot.data.docs
                         .map((item) => OrderItem(
+                              item.id,
                               item['name'],
                               item['userEmail'],
                               item['address'],

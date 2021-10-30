@@ -5,6 +5,7 @@ import 'package:online_shop/pages/order/order.dart';
 import 'package:online_shop/services/authentication.dart';
 
 class OrderItem extends StatelessWidget {
+  final String orderId;
   final String name;
   final String userEmail;
   final String address;
@@ -16,6 +17,7 @@ class OrderItem extends StatelessWidget {
   final String note;
 
   OrderItem(
+      this.orderId,
       this.name,
       this.userEmail,
       this.address,
@@ -40,6 +42,7 @@ class OrderItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => Order(
+                  docId: orderId,
                   buyerName: name,
                   buyerAddress: address,
                   buyerPhone: phone,
@@ -64,7 +67,7 @@ class OrderItem extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("#" + collectionRef,
+                    Text("#" + orderId,
                         style: TextStyle(
                           color: Colors.grey,
                         )),

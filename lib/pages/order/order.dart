@@ -13,6 +13,7 @@ import '../../size_config.dart';
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class Order extends StatelessWidget {
+  final String docId;
   final String buyerName;
   final String buyerAddress;
   final String buyerPhone;
@@ -23,7 +24,8 @@ class Order extends StatelessWidget {
   final String note;
 
   Order(
-      {this.buyerName,
+      {this.docId,
+      this.buyerName,
       this.buyerAddress,
       this.buyerPhone,
       this.buyerTime,
@@ -36,6 +38,20 @@ class Order extends StatelessWidget {
     String url = "whatsapp://send?phone=$number&text=$message";
 
     await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
+  }
+
+  String ordId;
+  Future<String> getDocId() async {
+    QuerySnapshot orderSnapShot = await FirebaseFirestore.instance
+        .collection("orders")
+        .where("orderDateTime", isEqualTo: buyerTime)
+        .get();
+    orderSnapShot.docs.forEach(
+      (data) {
+        ordId = "" + data.id.toString().toUpperCase();
+      },
+    );
+    return ordId;
   }
 
   @override
@@ -76,7 +92,7 @@ class Order extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("#" + orderCollection),
+                          Text("#" + (docId == null ? getDocId() : docId)),
                           Text(buyerTime),
                         ],
                       ),
@@ -448,12 +464,12 @@ class Order extends StatelessWidget {
                             .get();
                         orderSnapShot.docs.forEach(
                           (data) {
-                            orderId = "" + data.id.toString().toUpperCase();
+                            orderId = data.id.toString().toUpperCase();
                           },
                         );
                         print(orderId);
                         launchWhatsApp("+6282143614124",
-                            "==[KONFIRMASI PESANAN]==\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\nKode : $orderId\n(mohon chat langsung dikirim tanpa mengubah apapun)");
+                            "==[KONFIRMASI PESANAN]==\nKode : $orderId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat dikirim secara langsung tanpa mengubah apapun)");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
