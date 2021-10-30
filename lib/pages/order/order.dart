@@ -92,10 +92,7 @@ class Order extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("#" +
-                              (docId == null
-                                  ? getDocId()
-                                  : docId.toUpperCase())),
+                          docId == null ? Text("") : Text(docId.toUpperCase()),
                           Text(buyerTime),
                         ],
                       ),
