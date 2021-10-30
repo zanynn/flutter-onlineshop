@@ -468,7 +468,7 @@ class Order extends StatelessWidget {
                             ),
                           ),
                           Image.network(
-                              "https://www.kibrispdr.org/dwn/1/whatsapp-logo-image.png",
+                              "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2c90bb65-3c93-4f38-8f43-0469c153c1e0/detplej-37c88091-ddd9-4fb0-87cc-b2c6c41b1184.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjOTBiYjY1LTNjOTMtNGYzOC04ZjQzLTA0NjljMTUzYzFlMFwvZGV0cGxlai0zN2M4ODA5MS1kZGQ5LTRmYjAtODdjYy1iMmM2YzQxYjExODQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.uFJYd2MzmBjm-3_R8MnL0VMn47Nv5-41Rlc-bJ_IhLY",
                               width: 65),
                         ],
                       ),

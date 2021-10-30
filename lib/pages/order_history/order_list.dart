@@ -40,6 +40,7 @@ class _OrderListState extends State<OrderList> {
                               item['orderDateTime'],
                               item['status'],
                               item['collectionRef'],
+                              item['note'],
                             ))
                         .toList(),
                   );
