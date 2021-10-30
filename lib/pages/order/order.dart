@@ -40,15 +40,15 @@ class Order extends StatelessWidget {
     await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
   }
 
-  String ordId;
   Future<String> getDocId() async {
+    String ordId;
     QuerySnapshot orderSnapShot = await FirebaseFirestore.instance
         .collection("orders")
         .where("orderDateTime", isEqualTo: buyerTime)
         .get();
     orderSnapShot.docs.forEach(
       (data) {
-        ordId = "" + data.id.toString().toUpperCase();
+        ordId = data.id.toString().toUpperCase();
       },
     );
     return ordId;
@@ -92,7 +92,10 @@ class Order extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("#" + (docId == null ? getDocId() : docId)),
+                          Text("#" +
+                              (docId == null
+                                  ? getDocId()
+                                  : docId.toUpperCase())),
                           Text(buyerTime),
                         ],
                       ),

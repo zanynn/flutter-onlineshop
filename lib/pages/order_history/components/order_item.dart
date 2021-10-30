@@ -67,7 +67,7 @@ class OrderItem extends StatelessWidget {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("#" + orderId,
+                    Text("#" + orderId.toUpperCase(),
                         style: TextStyle(
                           color: Colors.grey,
                         )),
