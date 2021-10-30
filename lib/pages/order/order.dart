@@ -38,23 +38,10 @@ class Order extends StatelessWidget {
     await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
   }
 
-  String docId;
-  void getOrderId() async {
-    QuerySnapshot orderSnapShot = await FirebaseFirestore.instance
-        .collection("orders")
-        .where("orderDateTime", isEqualTo: buyerTime)
-        .get();
-    //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
-    orderSnapShot.docs.forEach(
-      (data) {
-        docId = data.id;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var formatNumber = NumberFormat("#,###");
+    String docId;
     CollectionReference productsOrder =
         firestore.collection("carts").doc(userId).collection(orderCollection);
     return Scaffold(
@@ -453,9 +440,20 @@ class Order extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       color: Color(0xFF56CD63),
-                      onPressed: () {
-                        launchWhatsApp("+6282143614124",
-                            "==[KONFIRMASI PESANAN]==\nKode : #$docId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat langsung dikirim tanpa mengubah apapun)");
+                      onPressed: () async {
+                        QuerySnapshot orderSnapShot = await FirebaseFirestore
+                            .instance
+                            .collection("orders")
+                            .where("orderDateTime", isEqualTo: buyerTime)
+                            .get();
+                        orderSnapShot.docs.forEach(
+                          (data) {
+                            docId = data.id.toUpperCase();
+                          },
+                        );
+                        print(docId);
+                        // launchWhatsApp("+6282143614124",
+                        //     "==[KONFIRMASI PESANAN]==\nKode : #$docId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat langsung dikirim tanpa mengubah apapun)");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -485,7 +483,7 @@ class Order extends StatelessWidget {
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => OrderList()));
                 },
-                text: "Go To Your History Order",
+                text: "Kembali ke riwayat pesanan",
               ),
             ),
           ],
