@@ -106,6 +106,14 @@ class OrderItem extends StatelessWidget {
                             fontSize: 18,
                             color: Color(0xff2DCE89)),
                       )
+                    ] else if (status == "Invalid") ...[
+                      Text(
+                        "Invalid",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color(0xffE6dd2f)),
+                      )
                     ] else ...[
                       Text(
                         "Failed",

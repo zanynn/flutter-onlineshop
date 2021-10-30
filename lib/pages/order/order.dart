@@ -359,6 +359,14 @@ class Order extends StatelessWidget {
                                 fontSize: 20,
                                 color: Color(0xff2DCE89)),
                           )
+                        ] else if (status == "Invalid") ...[
+                          Text(
+                            "Invalid",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Color(0xffE6dd2f)),
+                          )
                         ] else ...[
                           Text(
                             "Failed",
@@ -406,6 +414,12 @@ class Order extends StatelessWidget {
                     ] else if (status == "Success") ...[
                       Text(
                         "Pesanan sukses. Pesanan telah sampai pada tujuan. Terima kasih",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.white),
+                      )
+                    ] else if (status == "Invalid") ...[
+                      Text(
+                        "Pesanan Tidak Sesuai. Jumlah uang yang dikirimkan tidak sesuai",
                         style: TextStyle(
                             fontStyle: FontStyle.italic, color: Colors.white),
                       )
