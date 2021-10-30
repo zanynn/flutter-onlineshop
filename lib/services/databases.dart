@@ -61,8 +61,15 @@ Future<void> updateItemCart(
       .update(updateData);
 }
 
-Future<void> checkoutOrder(String name, String address, String phone,
-    int totalOrder, String orderDateTime, String collectionRef, String status) {
+Future<void> checkoutOrder(
+    String name,
+    String address,
+    String phone,
+    int totalOrder,
+    String orderDateTime,
+    String collectionRef,
+    String status,
+    String note) {
   CollectionReference orders = FirebaseFirestore.instance.collection("orders");
 
   var orderData = {
@@ -74,7 +81,8 @@ Future<void> checkoutOrder(String name, String address, String phone,
     'totalOrder': totalOrder,
     'orderDateTime': orderDateTime,
     'collectionRef': collectionRef,
-    'status': status
+    'status': status,
+    'note': note
   };
   orders.add(orderData);
   //update levelOrder User

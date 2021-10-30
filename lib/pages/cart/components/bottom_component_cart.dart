@@ -393,6 +393,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                               String formattedDateNow =
                                                   formatter.format(now);
                                               String status = "Unconfirmed";
+                                              String note = "-";
                                               checkoutOrder(
                                                   nameController.text,
                                                   addressController.text,
@@ -400,29 +401,28 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   totalOrder,
                                                   formattedDateNow,
                                                   orderCollection,
-                                                  status);
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              Order(
-                                                                buyerName:
-                                                                    nameController
-                                                                        .text,
-                                                                buyerAddress:
-                                                                    addressController
-                                                                        .text,
-                                                                buyerPhone:
-                                                                    phoneController
-                                                                        .text,
-                                                                buyerTime:
-                                                                    formattedDateNow,
-                                                                orderCollection:
-                                                                    orderCollection,
-                                                                totalOrder:
-                                                                    totalOrder,
-                                                                status: status,
-                                                              )));
+                                                  status,
+                                                  note);
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) => Order(
+                                                          buyerName:
+                                                              nameController
+                                                                  .text,
+                                                          buyerAddress:
+                                                              addressController
+                                                                  .text,
+                                                          buyerPhone:
+                                                              phoneController
+                                                                  .text,
+                                                          buyerTime:
+                                                              formattedDateNow,
+                                                          orderCollection:
+                                                              orderCollection,
+                                                          totalOrder:
+                                                              totalOrder,
+                                                          status: status,
+                                                          note: note)));
                                             },
                                             color: kPrimaryColor,
                                           ),

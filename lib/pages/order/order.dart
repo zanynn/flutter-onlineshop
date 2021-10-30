@@ -20,6 +20,7 @@ class Order extends StatelessWidget {
   final String orderCollection;
   final int totalOrder;
   final String status;
+  final String note;
 
   Order(
       {this.buyerName,
@@ -28,12 +29,27 @@ class Order extends StatelessWidget {
       this.buyerTime,
       this.orderCollection,
       this.totalOrder,
-      this.status});
+      this.status,
+      this.note});
 
   void launchWhatsApp(@required number, @required message) async {
     String url = "whatsapp://send?phone=$number&text=$message";
 
     await canLaunch(url) ? launch(url) : print("Can't open whatsapp");
+  }
+
+  String docId;
+  void getOrderId() async {
+    QuerySnapshot orderSnapShot = await FirebaseFirestore.instance
+        .collection("orders")
+        .where("orderDateTime", isEqualTo: buyerTime)
+        .get();
+    //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
+    orderSnapShot.docs.forEach(
+      (data) {
+        docId = data.id.toUpperCase();
+      },
+    );
   }
 
   @override
@@ -376,21 +392,6 @@ class Order extends StatelessWidget {
                                 color: Color(0xffF5365C)),
                           )
                         ],
-                        // status == "Unverified"
-                        //     ? Text(
-                        //         "Unverified",
-                        //         style: TextStyle(
-                        //             fontWeight: FontWeight.bold,
-                        //             fontSize: 20,
-                        //             color: Colors.orangeAccent[400]),
-                        //       )
-                        //     : Text(
-                        //         "Success",
-                        //         style: TextStyle(
-                        //             fontWeight: FontWeight.bold,
-                        //             fontSize: 20,
-                        //             color: Colors.greenAccent[400]),
-                        //       ),
                       ],
                     ),
                     if (status == "Unconfirmed") ...[
@@ -419,7 +420,7 @@ class Order extends StatelessWidget {
                       )
                     ] else if (status == "Invalid") ...[
                       Text(
-                        "Pesanan Tidak Sesuai. Jumlah uang yang dikirimkan tidak sesuai",
+                        "Persyaratan transaksi tidak sesuai / belum terpenuhi.",
                         style: TextStyle(
                             fontStyle: FontStyle.italic, color: Colors.white),
                       )
@@ -430,32 +431,14 @@ class Order extends StatelessWidget {
                             fontStyle: FontStyle.italic, color: Colors.white),
                       )
                     ],
-                    // status == "Unverified"
-                    //     ? Text(
-                    //         "Please contact the admin for verify your order.",
-                    //         style: TextStyle(
-                    //             fontStyle: FontStyle.italic,
-                    //             color: Colors.white),
-                    //       )
-                    //     : Text(
-                    //         "Your order has been successful. Thank's for buying",
-                    //         style: TextStyle(
-                    //             fontStyle: FontStyle.italic,
-                    //             color: Colors.white),
-                    //       ),
-                    status != "Success"
-                        ? Row(
-                            children: [
-                              Image.network(
-                                  "http://assets.stickpng.com/images/5ae21cc526c97415d3213554.png",
-                                  width: 50),
-                              Text(
-                                "+62 876 1234 5678",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          )
-                        : Container(),
+                    Text(
+                      "Catatan: ",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      note,
+                      style: TextStyle(color: Colors.white),
+                    )
                   ],
                 ),
               ),
@@ -464,14 +447,30 @@ class Order extends StatelessWidget {
                 ? Container(
                     margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                     width: double.infinity,
-                    height: 50,
+                    height: 45,
                     // color: Color(0xFF1C1C1C),
-                    child: DefaultButton(
-                      press: () {
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      color: Color(0xFF56CD63),
+                      onPressed: () {
                         launchWhatsApp("+6282143614124",
-                            "Halo Admin, saya pembeli atas nama $buyerName ingin mengkonfirmasi pesanan.");
+                            "==[KONFIRMASI PESANAN]==\nKode : #$docId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat langsung dikirim tanpa mengubah apapun)");
                       },
-                      text: "Chat with Admin (WhatsApp)",
+                      child: Row(
+                        children: [
+                          Text(
+                            "Confirm to Admin",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenWidth(18),
+                              color: Colors.white,
+                            ),
+                          ),
+                          Image.network(
+                              "https://www.kibrispdr.org/dwn/1/whatsapp-logo-image.png",
+                              width: 65),
+                        ],
+                      ),
                     ),
                   )
                 : Container(),
