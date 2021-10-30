@@ -55,7 +55,7 @@ class _BodyState extends State<Body> {
 
   Widget _category() {
     return Container(
-        margin: EdgeInsets.only(left: 10, right: 10),
+        margin: EdgeInsets.only(left: 32, right: 20),
         height: 99,
         child: Container(
           child: StreamBuilder<QuerySnapshot>(

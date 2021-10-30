@@ -10,7 +10,7 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
           CircleAvatar(
@@ -18,7 +18,7 @@ class CategoryItem extends StatelessWidget {
             backgroundColor: kPrimaryColor,
             // backgroundColor: Color(color),
             child: Container(
-              height: 40,
+              height: 45,
               child: Image(
                 color: Colors.white,
                 image: NetworkImage(image),

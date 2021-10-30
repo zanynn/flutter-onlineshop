@@ -41,7 +41,7 @@ class Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var formatNumber = NumberFormat("#,###");
-    String docId;
+    String orderId;
     CollectionReference productsOrder =
         firestore.collection("carts").doc(userId).collection(orderCollection);
     return Scaffold(
@@ -448,12 +448,12 @@ class Order extends StatelessWidget {
                             .get();
                         orderSnapShot.docs.forEach(
                           (data) {
-                            docId = data.id.toUpperCase();
+                            orderId = "" + data.id.toString().toUpperCase();
                           },
                         );
-                        print(docId);
-                        // launchWhatsApp("+6282143614124",
-                        //     "==[KONFIRMASI PESANAN]==\nKode : #$docId\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\n(mohon chat langsung dikirim tanpa mengubah apapun)");
+                        print(orderId);
+                        launchWhatsApp("+6282143614124",
+                            "==[KONFIRMASI PESANAN]==\nNama : $buyerName\nEmail: $email\nWaktu: $buyerTime\nKode : $orderId\n(mohon chat langsung dikirim tanpa mengubah apapun)");
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
