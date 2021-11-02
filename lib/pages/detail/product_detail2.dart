@@ -88,7 +88,8 @@ class _ProductDetail2State extends State<ProductDetail2> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage('http://10.0.2.2:8000'+ widget.product_image),
+                          image: NetworkImage(
+                              'http://10.0.2.2:8000' + widget.product_image),
                         ),
                       ),
                     ),
@@ -192,9 +193,15 @@ class _ProductDetail2State extends State<ProductDetail2> {
                                     if (event.exists) {
                                       widget.product_id = "";
 
-                                      _showScaffold("Product " +
+                                      _showScaffold("Barang " +
                                           widget.product_name +
-                                          " already exist, please check your cart!");
+                                          " sudah dikeranjang, mohon cek kembali.");
+                                    } else if (quantity >
+                                        widget.product_stock) {
+                                      String sStok =
+                                          widget.product_stock.toString();
+                                      _showScaffold(
+                                          "Jumlah barang yang dibeli melebihi stok yang ada.\nStok tersisa: $sStok");
                                     } else {
                                       addProductToCart(
                                           widget.product_id,
