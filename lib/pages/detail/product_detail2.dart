@@ -158,7 +158,20 @@ class _ProductDetail2State extends State<ProductDetail2> {
                             child: Row(
                               children: [
                                 _chooseSize(),
-                                _setQuantity(),
+                                Column(
+                                  children: [
+                                    _setQuantity(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Text(
+                                        "Stok Tersisa: " +
+                                            widget.product_stock.toString(),
+                                        style: TextStyle(
+                                            color: kPrimaryColor, fontSize: 13),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

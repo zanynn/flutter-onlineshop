@@ -4,6 +4,7 @@ import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:online_shop/widgets/product_item.dart';
+import '../../../constants.dart';
 import 'discount_banner.dart';
 
 class Body extends StatefulWidget {
@@ -23,7 +24,31 @@ class _BodyState extends State<Body> {
         children: <Widget>[
           _carouselImage(),
           DiscountBanner(),
-          _category(),
+          Column(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 330, bottom: 7),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Swipe See Other ",
+                          style: TextStyle(color: kPrimaryColor, fontSize: 10),
+                        ),
+                        Icon(
+                          Icons.swipe,
+                          color: kPrimaryColor,
+                          size: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              _category(),
+            ],
+          ),
           _featuredProduct(),
         ],
       ),
