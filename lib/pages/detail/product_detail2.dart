@@ -215,6 +215,11 @@ class _ProductDetail2State extends State<ProductDetail2> {
                                           widget.product_stock.toString();
                                       _showScaffold(
                                           "Jumlah barang yang dibeli melebihi stok yang ada.\nStok tersisa: $sStok");
+                                    } else if (widget.product_stock == 0) {
+                                      String sStok =
+                                          widget.product_stock.toString();
+                                      _showScaffold(
+                                          "Stok barang belum tersedia");
                                     } else {
                                       addProductToCart(
                                           widget.product_id,
